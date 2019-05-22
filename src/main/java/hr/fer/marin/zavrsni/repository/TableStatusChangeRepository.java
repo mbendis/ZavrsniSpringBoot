@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TableStatusChangeRepository extends JpaRepository<TableStatusChange, Long> {
+public interface TableStatusChangeRepository extends JpaRepository<TableStatusChange, Integer> {
 }

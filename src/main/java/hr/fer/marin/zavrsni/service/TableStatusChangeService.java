@@ -17,7 +17,7 @@ public class TableStatusChangeService {
         return tableStatusChangeRepository.findAll();
     }
 
-    public TableStatusChange getById(Long id){
+    public TableStatusChange getById(Integer id){
         return tableStatusChangeRepository.getOne(id);
     }
 
@@ -25,7 +25,7 @@ public class TableStatusChangeService {
         return tableStatusChangeRepository.save(tableStatusChange);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Integer id){
         tableStatusChangeRepository.deleteById(id);
     }
 }

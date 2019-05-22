@@ -1,9 +1,8 @@
 package hr.fer.marin.zavrsni.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 @javax.persistence.Table(name ="tables")
@@ -18,6 +17,11 @@ public class Table {
     private Integer y;
     private Integer w;
     private Integer h;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "camera_id", nullable = false)
+    @JsonIgnore
+    private Camera camera;
 
     public Table() {
     }
@@ -76,5 +80,14 @@ public class Table {
 
     public void setH(Integer h) {
         this.h = h;
+    }
+
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 }

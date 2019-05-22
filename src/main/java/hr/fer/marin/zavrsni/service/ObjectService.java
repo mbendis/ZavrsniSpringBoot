@@ -17,7 +17,7 @@ public class ObjectService {
         return objectRepository.findAll();
     }
 
-    public Object getObjectById(Long id){
+    public Object getObjectById(Integer id){
         return objectRepository.getOne(id);
     }
 
@@ -25,7 +25,7 @@ public class ObjectService {
         return objectRepository.save(object);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Integer id){
         objectRepository.deleteById(id);
     }
 }

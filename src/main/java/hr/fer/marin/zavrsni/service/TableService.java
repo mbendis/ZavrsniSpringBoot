@@ -5,13 +5,15 @@ import hr.fer.marin.zavrsni.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TableService {
 
     @Autowired
     private TableRepository tableRepository;
 
-    public Table getById(Long id){
+    public Table getById(Integer id){
         return tableRepository.getOne(id);
     }
 
@@ -19,7 +21,13 @@ public class TableService {
         return tableRepository.save(table);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Integer id){
         tableRepository.deleteById(id);
     }
+
+    public List<Table> getByCameraId(Integer cameraId){
+        return tableRepository.findByCameraId(cameraId);
+    }
+
+
 }

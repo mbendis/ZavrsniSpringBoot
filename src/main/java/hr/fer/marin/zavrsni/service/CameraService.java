@@ -17,7 +17,7 @@ public class CameraService {
         return cameraRepository.findAll();
     }
 
-    public Camera getById(Long id){
+    public Camera getById(Integer id){
         return cameraRepository.getOne(id);
     }
 
@@ -25,7 +25,7 @@ public class CameraService {
         return cameraRepository.save(camera);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Integer id){
         cameraRepository.deleteById(id);
     }
 }

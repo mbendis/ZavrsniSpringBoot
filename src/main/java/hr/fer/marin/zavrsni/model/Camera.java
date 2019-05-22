@@ -11,7 +11,11 @@ public class Camera {
     private Integer id;
 
     private String name;
+
+    @Column(name = "status_id")
     private Integer statusId;
+
+    @Column(name = "object_id")
     private Integer objectId;
 
     public Camera() {
