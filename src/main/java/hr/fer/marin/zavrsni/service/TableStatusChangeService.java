@@ -2,6 +2,7 @@ package hr.fer.marin.zavrsni.service;
 
 import hr.fer.marin.zavrsni.model.TableStatusChange;
 import hr.fer.marin.zavrsni.repository.TableStatusChangeRepository;
+import javafx.scene.control.Tab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,9 @@ public class TableStatusChangeService {
 
     public void deleteById(Integer id){
         tableStatusChangeRepository.deleteById(id);
+    }
+
+    public List<TableStatusChange> getAllByTableId(Integer tableId){
+        return tableStatusChangeRepository.findAllByTableId(tableId);
     }
 }

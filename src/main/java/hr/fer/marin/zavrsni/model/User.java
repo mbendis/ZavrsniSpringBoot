@@ -19,16 +19,18 @@ public class User {
     private String last_name;
     private String email;
     private String adress;
+    private String role;
 
     public User(){}
 
-    public User(String username, String password, String name, String last_name, String email, String adress) {
+    public User(String username, String password, String name, String last_name, String email, String adress, String role) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.last_name = last_name;
         this.email = email;
         this.adress = adress;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -85,5 +87,13 @@ public class User {
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

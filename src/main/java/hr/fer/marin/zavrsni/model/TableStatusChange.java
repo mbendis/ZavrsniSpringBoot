@@ -1,5 +1,7 @@
 package hr.fer.marin.zavrsni.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,7 +13,11 @@ public class TableStatusChange {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Integer tableId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "table_id", nullable = false)
+    @JsonIgnore
+    private Table table;
+
     private Boolean occupied;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -20,8 +26,7 @@ public class TableStatusChange {
     public TableStatusChange() {
     }
 
-    public TableStatusChange(Integer tableId, Boolean occupied, Date time) {
-        this.tableId = tableId;
+    public TableStatusChange(Boolean occupied, Date time) {
         this.occupied = occupied;
         this.time = time;
     }
@@ -32,14 +37,6 @@ public class TableStatusChange {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(Integer tableId) {
-        this.tableId = tableId;
     }
 
     public Boolean getOccupied() {
@@ -56,5 +53,13 @@ public class TableStatusChange {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
     }
 }

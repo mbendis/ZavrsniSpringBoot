@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Objects</title>
+
+    <div th:replace="header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="header :: header"/>
+
+<div class="container">
+
+    <div th:if="${param.successfulyAdded}">
+        <div class="alert alert-info">
+            New object added.
+        </div>
+    </div>
+
+    <br>
+
+   <h3>MyObjects</h3>
+
+
+<div>
+    <table class="table-hover table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Object Name </th>
+            <th scope="col"> Address </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${objects.empty}">
+            <td colspan="2"> No Objects Available </td>
+        </tr>
+        <tr th:each="object : ${objects}">
+            <td scope="row" class="col-md-2"><span th:text="${object.name}"> Title </span></td>
+            <td scope="row" class="col-md-3"><span th:text="${object.adress}"> Author </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+    <button class="active alert-info"><a th:href="@{/createobject}">Add new object</a></button>
+</div>
+<!-- /.container -->
+
+<div th:replace="footer :: footer"/>
+
+</body>
+</html>

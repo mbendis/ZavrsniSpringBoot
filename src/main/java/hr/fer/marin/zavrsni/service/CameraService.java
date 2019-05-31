@@ -28,4 +28,6 @@ public class CameraService {
     public void deleteById(Integer id){
         cameraRepository.deleteById(id);
     }
+
+    public List<Camera> getByObjectId(Integer objectId){ return cameraRepository.getByObject_Id(objectId);}
 }

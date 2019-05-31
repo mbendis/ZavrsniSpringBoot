@@ -1,5 +1,7 @@
 package hr.fer.marin.zavrsni.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,16 +17,17 @@ public class Camera {
     @Column(name = "status_id")
     private Integer statusId;
 
-    @Column(name = "object_id")
-    private Integer objectId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "object_id", nullable = false)
+    @JsonIgnore
+    private Object object;
 
     public Camera() {
     }
 
-    public Camera(String name, Integer statusId, Integer objectId) {
+    public Camera(String name, Integer statusId) {
         this.name = name;
         this.statusId = statusId;
-        this.objectId = objectId;
     }
 
     public Integer getId() {
@@ -51,11 +54,11 @@ public class Camera {
         this.statusId = statusId;
     }
 
-    public Integer getObjectId() {
-        return objectId;
+    public Object getObject() {
+        return object;
     }
 
-    public void setObjectId(Integer objectId) {
-        this.objectId = objectId;
+    public void setObject(Object object) {
+        this.object = object;
     }
 }
