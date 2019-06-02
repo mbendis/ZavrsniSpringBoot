@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+
+    <div th:replace="header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="header :: header"/>
+
+<div class="container">
+
+    <div th:if="${param.successfulyAdded}">
+        <div class="alert alert-info">
+            New object added.
+        </div>
+    </div>
+
+    <br>
+
+    <h3>MyObjects</h3>
+
+
+    <div>
+        <table class="table-hover table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col"> Object Name </th>
+                <th scope="col"> Address </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${cameras.empty}">
+                <td colspan="2"> No Objects Available </td>
+            </tr>
+            <tr th:each="camera : ${cameras}">
+                <td scope="row" class="col-md-2"><span th:text="${camera.name}"> Title </span></td>
+                <td scope="row" class="col-md-3"><span th:text="${camera.name}"> Author </span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /.container -->
+
+<div th:replace="footer :: footer"/>
+
+</body>
+</html>

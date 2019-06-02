@@ -29,5 +29,7 @@ public class TableService {
         return tableRepository.findByCameraId(cameraId);
     }
 
-
+    public Table update(Table table){
+        return tableRepository.save(table);
+    }
 }

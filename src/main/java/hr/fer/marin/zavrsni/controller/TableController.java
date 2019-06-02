@@ -30,6 +30,7 @@ public class TableController {
     ){
         Camera camera = cameraService.getById(cameraId);
         table.setCamera(camera);
+        table.setOccupied(false);
         return tableService.add(table);
     }
 

@@ -17,6 +17,8 @@ public class Table {
     private Integer y;
     private Integer w;
     private Integer h;
+    private Boolean occupied;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "camera_id", nullable = false)
@@ -89,5 +91,13 @@ public class Table {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+
+    public Boolean getOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(Boolean occupied) {
+        this.occupied = occupied;
     }
 }

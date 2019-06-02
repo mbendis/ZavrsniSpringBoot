@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+<div th:fragment="map">
+    <!-- this is header -->
+    <div id='map' style='height:500px;width:500px'></div>
+    <script>
+        tomtom.setProductInfo('TableStats', '1.0');
+        tomtom.L.map('map', {
+            key: 'XAPqlzgsbgcmvPryzPKUjNhvfA4ZLdiZ'
+        });
+    </script>
+</div>
+
+</body>
+</html>

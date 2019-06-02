@@ -1,23 +1,34 @@
 package hr.fer.marin.zavrsni.controller;
 
-import hr.fer.marin.zavrsni.model.Camera;
+import hr.fer.marin.zavrsni.model.*;
 import hr.fer.marin.zavrsni.model.Object;
-import hr.fer.marin.zavrsni.model.Table;
-import hr.fer.marin.zavrsni.service.CameraService;
-import hr.fer.marin.zavrsni.service.ObjectService;
-import hr.fer.marin.zavrsni.service.UserService;
+import hr.fer.marin.zavrsni.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    TableStatusChangeService tableStatusChangeService;
+
+    @Autowired
+    TableService tableService;
 
     @Autowired
     CameraService cameraService;
@@ -60,8 +71,47 @@ public class HomeController {
     }
 
     @GetMapping("/statistics")
-    public String statistics(){
+    public String statistics(ModelMap model,  @RequestParam("id") Integer objectId){
+        List<Camera> cameras = cameraService.getByObjectId(1);
+        List<Table> tables = new ArrayList<>();
+        List<TableStatusChange> tableStatusChanges = new ArrayList<>();
+        for (Camera camera: cameras) {
+            tables.addAll(tableService.getByCameraId(camera.getId()));
+        }
+        model.addAttribute("cameras", cameras);
+
+        for(Table table : tables){
+            tableStatusChanges.addAll(tableStatusChangeService.getAllByTableId(table.getId()));
+        }
+        model.addAttribute("tables", tables);
+
+        tableStatusChanges.sort(new Comparator<TableStatusChange>() {
+            @Override
+            public int compare(TableStatusChange o1, TableStatusChange o2) {
+                return (int) (o1.getTime().getTime()- o2.getTime().getTime());
+            }
+        });
+
+        List<TimePoint> dataTime = new ArrayList<>();
+
+
+        Integer occupied = 0;
+        for(TableStatusChange tsc : tableStatusChanges) {
+            if (tsc.getOccupied()) {
+                occupied++;
+            } else {
+                occupied--;
+            }
+            SimpleDateFormat ft =
+                    new SimpleDateFormat("MM/dd/YYYY HH:mm");
+
+            dataTime.add(new TimePoint( ft.format(tsc.getTime()).toString(), occupied ));
+        }
+
+        model.addAttribute("datatime", dataTime);
+
         return "statistics";
+
     }
 
     @ModelAttribute("cameras")
@@ -72,6 +122,23 @@ public class HomeController {
     @RequestMapping("/showContentPart")
     public String showContentPart() {
         return "content-part";
+    }
+
+    @GetMapping("/objectStats")
+    public String objectStats(Principal principal, ModelMap model, @RequestParam("id") Integer objectId){
+
+        List<Camera> cameras = cameraService.getByObjectId(objectId);
+        List<Table> tables = new ArrayList<>();
+        List<TableStatusChange> tableStatusChanges = new ArrayList<>();
+        for (Camera camera: cameras) {
+            tables.addAll(tableService.getByCameraId(camera.getId()));
+        }
+        model.addAttribute("cameras", cameras);
+
+        for(Table table : tables){
+            tableStatusChanges.addAll(tableStatusChangeService.getAllByTableId(table.getId()));
+        }
+        return "objectStats";
     }
 
 }

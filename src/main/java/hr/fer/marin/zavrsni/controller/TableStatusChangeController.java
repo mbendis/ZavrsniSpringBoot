@@ -26,6 +26,8 @@ public class TableStatusChangeController {
                                       @Valid @RequestBody TableStatusChange tableStatusChange
     ){
         Table table = tableService.getById(tableId);
+        table.setOccupied(tableStatusChange.getOccupied());
+        tableService.update(table);
         tableStatusChange.setTime(Date.from(Instant.now()));
         tableStatusChange.setTable(table);
         return tableStatusChangeService.add(tableStatusChange);

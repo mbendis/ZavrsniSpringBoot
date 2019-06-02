@@ -12,7 +12,7 @@
 
 <div class="container">
 
-
+    <br/>
     <div>
         <table class="table-hover table-bordered">
             <thead class="thead-dark">
@@ -26,17 +26,21 @@
                 <td colspan="2"> No Objects Available </td>
             </tr>
             <tr th:each="object : ${objects}">
-                <td scope="row" class="col-md-2"><span th:text="${object.name}"> Title </span></td>
-                <td scope="row" class="col-md-3"><span th:text="${object.adress}"> Author </span></td>
+                <td  scope="row" class="col-md-2"><a th:href="@{/objectStats(id=${object.id})}"><span th:text="${object.name}"> </span></a></td>
+                <td  scope="row" class="col-md-3"><a th:href="@{/objectStats(id=${object.id})}"><span th:text="${object.adress}"> </span></a></td>
             </tr>
             </tbody>
         </table>
     </div>
-
+    <br/>
+    <br/>
+    <br/>
+    <div align="center">
+    <div class="container" th:replace="map :: map">
+    </div>>
 </div>
 
-<div th:fragment="content">
-    Only this div will be rendered!
+
 </div>
 
 </div>
