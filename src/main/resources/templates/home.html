@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Boot Thymeleaf + Spring Security</title>
+    <title>Home</title>
 
     <div th:replace="header :: header-css"/>
 
@@ -13,6 +13,13 @@
 <div class="container">
 
     <br/>
+    <div align="center">
+        <div class="container" th:replace="map :: map" />
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
     <div>
         <table class="table-hover table-bordered">
             <thead class="thead-dark">
@@ -32,12 +39,8 @@
             </tbody>
         </table>
     </div>
-    <br/>
-    <br/>
-    <br/>
-    <div align="center">
-    <div class="container" th:replace="map :: map">
-    </div>>
+
+
 </div>
 
 

@@ -3,12 +3,57 @@
 <body>
 <div th:fragment="map">
     <!-- this is header -->
-    <div id='map' style='height:500px;width:500px'></div>
-    <script>
+    <div id='map' style='height:600px;width:1024px'></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var objects = /*[[${objects}]]*/ 'default';
+        var objectsParsed = Object.assign(objects);
+        console.log(objectsParsed);
+
         tomtom.setProductInfo('TableStats', '1.0');
-        tomtom.L.map('map', {
+        var map = tomtom.map('map', {
             key: 'XAPqlzgsbgcmvPryzPKUjNhvfA4ZLdiZ'
         });
+
+        var markerGreen = {
+            icon: tomtom.L.icon({
+            iconUrl: '/sdk/ic-green.gif',
+            iconSize: [30, 34],
+            iconAnchor: [15, 34]
+        })
+        };
+        var markerYellow = {
+            icon: tomtom.L.icon({
+                iconUrl: '/sdk/ic-yellow.gif',
+                iconSize: [30, 34],
+                iconAnchor: [15, 34]
+            })
+        };
+        var markerRed = {
+            icon: tomtom.L.icon({
+                iconUrl: '/sdk/ic-red.gif',
+                iconSize: [30, 34],
+                iconAnchor: [15, 34]
+            })
+        };
+
+        map.setView([45.81313, 15.97753], 11);
+
+        for(var i = 0; i < objectsParsed.length; i++){
+
+            var markerColor = markerGreen;
+            if(objectsParsed[i].percentage > 50 && objectsParsed[i].percentage < 75) {
+                markerColor = markerYellow;
+            } else if( objectsParsed[i].percentage >= 75) {
+                markerColor = markerRed;
+            }
+            tomtom.L.marker([objectsParsed[i].latitude, objectsParsed[i].longitude], markerColor)
+                .bindPopup(objectsParsed[i].name.link("http://localhost:8080/statistics?id=" + objectsParsed[i].id)).addTo(map);
+
+        }
+
+
+        /*]]>*/
     </script>
 </div>
 

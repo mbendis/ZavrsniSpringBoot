@@ -1,36 +1,30 @@
 package hr.fer.marin.zavrsni.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-@Entity
-@javax.persistence.Table(name = "objects")
-public class Object {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ObjectWithPercentage {
     private Integer id;
     private String name;
     private String adress;
     private double longitude;
     private double latitude;
+    private int percentage;
+    private int userId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    private User user;
-
-
-
-    public Object() {
+    public ObjectWithPercentage(Object object, int percentage) {
+        this.id = object.getId();
+        this.name = object.getName();
+        this.adress = object.getAdress();
+        this.longitude = object.getLongitude();
+        this.latitude = object.getLatitude();
+        this.percentage = percentage;
+        this.userId = object.getUser().getId();
     }
 
-    public Object(String name, String adress, Double latitude, Double longitude) {
-        this.name = name;
-        this.adress = adress;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Integer getId() {
@@ -57,14 +51,6 @@ public class Object {
         this.adress = adress;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public double getLongitude() {
         return longitude;
     }
@@ -79,5 +65,13 @@ public class Object {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

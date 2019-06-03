@@ -44,7 +44,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception
     {
             http.csrf().disable()
-                    .httpBasic().and()
+                    //.httpBasic().and()
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/login").permitAll()
@@ -67,6 +67,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**","/webjars/**", "/javax.faces.resource/**");
+                .antMatchers("/resources/**", "/static/**","/webjars/**", "/javax.faces.resource/**", "/sdk/**", "/graphs/**");
     }
 }

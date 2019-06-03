@@ -53,4 +53,17 @@ public class ObjectService {
         }
         return tableStatusChangeList;
     }
+
+    public int getPercetageOfTablesOccupied(Integer objectId){
+        int occupied = 0;
+        int total = 0;
+        for (Camera camera: cameraService.getByObjectId(objectId)){
+            List<Table> tables = tableService.getByCameraId(camera.getId());
+            total = tables.size();
+            for(Table table: tables){
+                if(table.getOccupied()) occupied++;
+            }
+        }
+        return (int)((occupied/((double)total))*100);
+    }
 }
