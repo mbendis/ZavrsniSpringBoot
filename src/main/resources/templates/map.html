@@ -48,8 +48,7 @@
                 markerColor = markerRed;
             }
             tomtom.L.marker([objectsParsed[i].latitude, objectsParsed[i].longitude], markerColor)
-                .bindPopup(objectsParsed[i].name.link("http://localhost:8080/statistics?id=" + objectsParsed[i].id)).addTo(map);
-
+                .bindPopup(objectsParsed[i].name.link("http://localhost:8080/statistics?id=" + objectsParsed[i].id +"&time=day")).addTo(map);
         }
 
 

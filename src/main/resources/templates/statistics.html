@@ -12,8 +12,17 @@
 
 <div class="container">
 
-    Statistics
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <h3> Statistics for <span th:text="${objectName}"> </span></h3>
+    <h4> Number of tables occupied:  <span th:text="${numberOfOccupied}"> </span></h4>
+    <h4> Number of tables total:  <span th:text="${#lists.size(tables)}"> </span></h4>
+    <canvas id="myChart" width="300" height="300"></canvas>
+    <a th:href="@{/statistics?id=1&time=day}"><button class="btn-info" >Graph for today</button></a>
+    <a th:href="@{/statistics?id=1&time=week}"><button class="btn-info" >Graph for this week</button></a>
+    <a th:href="@{/statistics?id=1&time=month}"><button class="btn-info" >Graph for this month</button></a>
+    <a th:href="@{/statistics?id=1&time=all}"><button class="btn-info" >Graph for all time</button></a>
+    <br/>
+    <br/>
+    <canvas id="tableCanvas" width="200" height="100"></canvas>
 
 </div>
 <!-- /.container -->
@@ -23,7 +32,17 @@
 </body>
 
 
+<script>
+    var canvas = document.getElementById("tableCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#2bff7b";
+    ctx.fillRect(20, 20, 150, 75);
+</script>
+
 <script th:inline="javascript">
+
+
+
     /*<![CDATA[*/
     var timeFormat = 'MM/DD/YYYY HH:mm';
 
@@ -46,7 +65,7 @@
         data: {
             datasets: [{
                 data: datanew,
-                // datatime , dataoccupied
+                steppedLine: true,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

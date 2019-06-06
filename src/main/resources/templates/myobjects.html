@@ -17,6 +17,11 @@
             New object added.
         </div>
     </div>
+    <div th:if="${param.successfulyDeleted}">
+        <div class="alert alert-info">
+            Object successfuly deleted.
+        </div>
+    </div>
 
     <br>
 
@@ -29,6 +34,7 @@
         <tr>
             <th scope="col"> Object Name </th>
             <th scope="col"> Address </th>
+            <th scope="col"> Delete </th>
         </tr>
         </thead>
         <tbody>
@@ -36,13 +42,18 @@
             <td colspan="2"> No Objects Available </td>
         </tr>
         <tr th:each="object : ${objects}">
-            <td scope="row" class="col-md-2"><span th:text="${object.name}"> Title </span></td>
-            <td scope="row" class="col-md-3"><span th:text="${object.adress}"> Author </span></td>
+            <td scope="row" class="col-md-3"><span th:text="${object.name}"></span></td>
+            <td scope="row" class="col-md-4"><span th:text="${object.adress}"></span></td>
+            <td scope="row" class="col-md-1"><form th:action="@{/deleteobject(id=${object.id})}" method="post">
+                <input type="submit" class="btn btn-lg btn-primary btn-danger" value="X"/>
+                </form>
+            </td>
+
         </tr>
         </tbody>
     </table>
 </div>
-
+    <br/>
     <button class="active alert-info"><a th:href="@{/createobject}">Add new object</a></button>
 </div>
 <!-- /.container -->

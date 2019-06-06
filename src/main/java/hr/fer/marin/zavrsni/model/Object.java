@@ -21,8 +21,6 @@ public class Object {
     @JsonIgnore
     private User user;
 
-
-
     public Object() {
     }
 

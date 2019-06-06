@@ -15,7 +15,6 @@ public class CameraController {
 
     @Autowired
     private CameraService cameraService;
-
     @Autowired
     private ObjectService objectService;
 
@@ -23,7 +22,6 @@ public class CameraController {
     public List<Camera> getCamera(@RequestParam(value = "objectId") Integer objectId){
         return cameraService.getByObjectId(objectId);
     }
-
     @RequestMapping(value = "/addcamera", method = RequestMethod.POST)
     public Camera addCamera(@RequestParam(value = "objectId") Integer objectId,
                             @Valid @RequestBody Camera camera){
@@ -32,7 +30,6 @@ public class CameraController {
         cameraService.add(camera);
         return camera;
     }
-
     @RequestMapping("/deleteCamera")
     public void deleteCamera(@RequestParam(value = "cameraId") Integer cameraId){
         cameraService.deleteById(cameraId);

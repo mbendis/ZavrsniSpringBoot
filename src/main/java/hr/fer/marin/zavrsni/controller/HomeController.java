@@ -40,7 +40,8 @@ public class HomeController {
         List<Object> objects = objectService.getAllObjects();
         List<ObjectWithPercentage> objectWithPercentages = new ArrayList<>();
         for(Object object : objects){
-            objectWithPercentages.add(new ObjectWithPercentage(object, objectService.getPercetageOfTablesOccupied(object.getId())));
+            objectWithPercentages.add(new ObjectWithPercentage(object,
+                    objectService.getPercetageOfTablesOccupied(object.getId())));
         }
         model.addAttribute("objects", objectWithPercentages);
         return "/home";
@@ -71,38 +72,18 @@ public class HomeController {
     }
 
     @GetMapping("/statistics")
-    public String statistics(ModelMap model,  @RequestParam("id") Integer objectId){
+    public String statistics(ModelMap model,
+                             @RequestParam("id") Integer objectId,
+                             @RequestParam("time") String timeframe){
+
         List<Camera> cameras = cameraService.getByObjectId(objectId);
-        List<Table> tables = new ArrayList<>();
-        List<TableStatusChange> tableStatusChanges = new ArrayList<>();
-        for (Camera camera: cameras) {
-            tables.addAll(tableService.getByCameraId(camera.getId()));
-        }
+        List<Table> tables = tableService.getTablesByObjectId(objectId);
+        List<TimePoint> dataTime = tableStatusChangeService.getTimeframeByObjectId(objectId, timeframe);
+
+        model.addAttribute("objectName", objectService.getObjectById(objectId).getName());
+        model.addAttribute("numberOfOccupied", tableService.getNumberOfOccupiedInObject(objectId));
         model.addAttribute("cameras", cameras);
-
-        for(Table table : tables){
-            tableStatusChanges.addAll(tableStatusChangeService.getAllByTableId(table.getId()));
-        }
         model.addAttribute("tables", tables);
-
-        tableStatusChanges.sort((o1, o2) -> (int) (o1.getTime().getTime()- o2.getTime().getTime()));
-
-        List<TimePoint> dataTime = new ArrayList<>();
-
-
-        Integer occupied = 0;
-        for(TableStatusChange tsc : tableStatusChanges) {
-            if (tsc.getOccupied()) {
-                occupied++;
-            } else {
-                occupied--;
-            }
-            SimpleDateFormat ft =
-                    new SimpleDateFormat("MM/dd/YYYY HH:mm");
-
-            dataTime.add(new TimePoint(ft.format(tsc.getTime()), occupied ));
-        }
-
         model.addAttribute("datatime", dataTime);
 
         return "statistics";

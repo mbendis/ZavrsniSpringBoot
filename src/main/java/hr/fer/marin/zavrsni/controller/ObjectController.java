@@ -39,4 +39,10 @@ public class ObjectController {
         objectService.addObject(object);
         response.sendRedirect("/myobjects?successfulyAdded=true");
     }
+
+    @RequestMapping(value = "/deleteobject", method = RequestMethod.POST)
+    public void deleteObject(@RequestParam("id") Integer objectId, HttpServletResponse response) throws IOException {
+        objectService.deleteById(objectId);
+        response.sendRedirect("/myobjects?successfulyDeleted=true");
+    }
 }
