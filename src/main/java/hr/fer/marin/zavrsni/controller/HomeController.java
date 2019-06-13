@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -35,7 +33,7 @@ public class HomeController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/home")
+    @GetMapping( value = {"/home", "/"})
     public String index(ModelMap model){
         List<Object> objects = objectService.getAllObjects();
         List<ObjectWithPercentage> objectWithPercentages = new ArrayList<>();
@@ -81,6 +79,7 @@ public class HomeController {
         List<TimePoint> dataTime = tableStatusChangeService.getTimeframeByObjectId(objectId, timeframe);
 
         model.addAttribute("objectName", objectService.getObjectById(objectId).getName());
+        model.addAttribute("objectId", objectId);
         model.addAttribute("numberOfOccupied", tableService.getNumberOfOccupiedInObject(objectId));
         model.addAttribute("cameras", cameras);
         model.addAttribute("tables", tables);

@@ -2,8 +2,10 @@ package hr.fer.marin.zavrsni.controller;
 
 import hr.fer.marin.zavrsni.model.Camera;
 import hr.fer.marin.zavrsni.model.Table;
+import hr.fer.marin.zavrsni.model.TableStatusChange;
 import hr.fer.marin.zavrsni.service.CameraService;
 import hr.fer.marin.zavrsni.service.TableService;
+import hr.fer.marin.zavrsni.service.TableStatusChangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,9 @@ import java.util.List;
 
 @RestController
 public class TableController {
+
+    @Autowired
+    private TableStatusChangeService tableStatusChangeService;
 
     @Autowired
     private TableService tableService;
@@ -36,6 +41,10 @@ public class TableController {
 
     @RequestMapping(value = "/tables", method = RequestMethod.DELETE)
     public String deleteTable(@RequestParam(value = "tableId") Integer tableId){
+        List<TableStatusChange> tableStatusChanges = tableStatusChangeService.getAllByTableId(tableId);
+        for(TableStatusChange tsc : tableStatusChanges){
+            tsc.setTable(null);
+        }
         tableService.deleteById(tableId);
         return "Succesfuly deleted table " + tableId;
     }

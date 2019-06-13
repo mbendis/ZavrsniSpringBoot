@@ -42,8 +42,8 @@
             <td colspan="2"> No Objects Available </td>
         </tr>
         <tr th:each="object : ${objects}">
-            <td scope="row" class="col-md-3"><span th:text="${object.name}"></span></td>
-            <td scope="row" class="col-md-4"><span th:text="${object.adress}"></span></td>
+            <td scope="row" class="col-md-3"><a th:href="@{/statistics(id=${object.id}, time='day')}"><span th:text="${object.name}"></span></a></td>
+            <td scope="row" class="col-md-4"><a th:href="@{/statistics(id=${object.id}, time='day')}"><span th:text="${object.adress}"></span></a></td>
             <td scope="row" class="col-md-1"><form th:action="@{/deleteobject(id=${object.id})}" method="post">
                 <input type="submit" class="btn btn-lg btn-primary btn-danger" value="X"/>
                 </form>

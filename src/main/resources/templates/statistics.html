@@ -11,15 +11,26 @@
 <div th:replace="header :: header"/>
 
 <div class="container">
+    <div class="row">
+        <div class="col">
+            <canvas id="myChart" width="300" height="300"></canvas>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
 
     <h3> Statistics for <span th:text="${objectName}"> </span></h3>
     <h4> Number of tables occupied:  <span th:text="${numberOfOccupied}"> </span></h4>
     <h4> Number of tables total:  <span th:text="${#lists.size(tables)}"> </span></h4>
     <canvas id="myChart" width="300" height="300"></canvas>
-    <a th:href="@{/statistics?id=1&time=day}"><button class="btn-info" >Graph for today</button></a>
-    <a th:href="@{/statistics?id=1&time=week}"><button class="btn-info" >Graph for this week</button></a>
-    <a th:href="@{/statistics?id=1&time=month}"><button class="btn-info" >Graph for this month</button></a>
-    <a th:href="@{/statistics?id=1&time=all}"><button class="btn-info" >Graph for all time</button></a>
+    <canvas id="pie" width="300" height="300"></canvas>
+    <a th:href="@{/statistics?(id=${objectId}, time='day')}"><button class="btn-info" >Graph for today</button></a>
+    <a th:href="@{/statistics?(id=${objectId}, time='month')}"><button class="btn-info" >Graph for this month</button></a>
+    <a th:href="@{/statistics?(id=${objectId}, time='all')}"><button class="btn-info" >Graph for all time</button></a>
     <br/>
     <br/>
     <canvas id="tableCanvas" width="200" height="100"></canvas>
@@ -105,6 +116,23 @@
                     }
                 }]
             }
+        }
+    });
+
+    var occupied = /*[[${numberOfOccupied}]]*/ 'default';
+    var total = /*[[${#lists.size(tables)}]]*/ 'default';
+    var pie = document.getElementById('pie');
+    var myPieChart = new Chart(pie, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [occupied, total - occupied],
+                backgroundColor: ["#c45850","#3cba9f"]
+            }],
+            labels: [
+                'Occupied',
+                'Free'
+            ]
         }
     });
     /*]]>*/

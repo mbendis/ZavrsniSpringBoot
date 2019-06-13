@@ -57,8 +57,6 @@ public class TableStatusChangeService {
                 for (TableStatusChange tsc : getAllByTableId(table.getId())) {
                     if (timeframe.equals("day") && tsc.getTime().getDate() == new Date().getDate()) {
                         tableStatusChanges.add(tsc);
-                    } else if (timeframe.equals("week") && tsc.getTime().getDate() > (new Date().getDate() - 7)) {
-                        tableStatusChanges.add(tsc);
                     } else if (timeframe.equals("month") && tsc.getTime().getMonth() == new Date().getMonth()) {
                         tableStatusChanges.add(tsc);
                     }
@@ -72,7 +70,7 @@ public class TableStatusChangeService {
         for(TableStatusChange tsc : tableStatusChanges) {
             if (tsc.getOccupied()) {
                 occupied++;
-            } else {
+            } else if(occupied > 0) {
                 occupied--;
             }
             SimpleDateFormat ft =
